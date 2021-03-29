@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: test
+spec:
+  containers:
+  - name: ci-is
+    image: docker.devopsinitiative.com/softwareag/msr-jenkins:abcdefgh
+    securityContext:
+      runAsUser: 1724
+      fsGroup: 1724
+      allowPrivilegeEscalation: false
+    command:
+    - /opt/softwareag/entrypoint.sh
+    tty: true
+  - name: docker
+    image: docker:18.02
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-sock-volume
+  volumes:
+  - name: docker-sock-volume
+    hostPath:
+      # location on host
+      path: /var/run/docker.sock
+      # this field is optional
+      type: File
+  imagePullSecrets:
+  - name: regcred

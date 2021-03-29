@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webMethodsTestSuite description="" name="BookstoreTest">
+    <webMethodsTestCase description="Generate a Test Wizard" name="TC_getBooks">
+        <service folder="bookstore.services" name="getBooks">
+            <input>
+                <file filename="resources/test/xml/data/bookstore_services_getBooks_input.xml"/>
+            </input>
+            <expected>
+                <file filename="resources/test/xml/data/bookstore_services_getBooks_input.xml"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+    <webMethodsTestCase name="TC_getBookDetails">
+        <service folder="bookstore.services" name="getBookDetails">
+            <input>
+                <file filename="resources/test/xml/data/bookstore_services_getBookDetails_input.xml"/>
+            </input>
+            <expected>
+                <file filename="resources/test/xml/data/bookstore_services_getBookDetails_output.xml"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+</webMethodsTestSuite>

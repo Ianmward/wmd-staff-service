@@ -1,0 +1,51 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool: AnzDemoLab
+
+variables:
+  imageName: 'wmd-bookstore'
+
+steps:
+- script: sh ./wait_for_is.sh
+  displayName: 'Prepare'
+
+- task: Ant@1
+  inputs:
+    buildFile: 'build.xml'
+    options: '-DSAGHome=/opt/softwareag -DSAG_CI_HOME=/opt/softwareag/sagdevops-ci-assets -DprojectName=$(Agent.JobName)'
+    targets: 'build'
+    javaHomeOption: 'JDKVersion'
+  displayName: 'Build'
+
+- task: Ant@1
+  inputs:
+    buildFile: 'build.xml'
+    options: '-DSAGHome=/opt/softwareag -DSAG_CI_HOME=/opt/softwareag/sagdevops-ci-assets -DprojectName=$(Agent.JobName)'
+    targets: 'deploy'
+    javaHomeOption: 'JDKVersion'
+  displayName: 'Deploy'
+
+- task: Ant@1
+  inputs:
+    buildFile: 'build.xml'
+    options: '-DSAGHome=/opt/softwareag -DSAG_CI_HOME=/opt/softwareag/sagdevops-ci-assets -DprojectName=$(Agent.JobName)'
+    targets: 'test'
+    publishJUnitResults: true
+    testResultsFiles: '**/TESTS-*.xml'
+    testRunTitle: 'Unit Tests'
+    javaHomeOption: 'JDKVersion'
+  displayName: 'Test'
+
+
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    repository: $(imageName)
+    command: build
+    Dockerfile: image/Dockerfile

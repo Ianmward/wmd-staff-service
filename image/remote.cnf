@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <record name="local" javaclass="com.wm.util.Values">
+    <value name="alias">local</value>
+    <value name="host">localhost</value>
+    <number name="port" type="Integer">5555</number>
+    <value name="user">Administrator</value>
+    <value name="handle">wm.is.admin.remote.server.local</value>
+    <value name="ssl">no</value>
+    <value name="acl">Administrators</value>
+    <value name="retryServer"></value>
+    <number name="keepalive" type="Integer">1</number>
+    <float name="timeout" type="Float">5.0</float>
+  </record>
+</Values>
